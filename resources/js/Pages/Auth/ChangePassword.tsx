@@ -1,0 +1,7 @@
+import { Link, useForm } from '@inertiajs/react';
+import AuthLayout from '../../Layouts/AuthLayout';
+import { Field } from '../../Components/UI';
+export default function ChangePassword({ required }: { required: boolean }) {
+    const form = useForm({ current_password: '', password: '', password_confirmation: '' });
+    return <AuthLayout title="Change password">{required && <p className="mb-5 text-sm text-amber-800">Update your initial password to continue.</p>}<form className="space-y-5" onSubmit={e => { e.preventDefault(); form.put('/change-password', { onFinish: () => form.reset() }); }}>{(['current_password', 'password', 'password_confirmation'] as const).map((key, index) => <Field key={key} label={['Current password', 'New password', 'Confirm new password'][index]} error={form.errors[key]}><input required type="password" autoComplete={index ? 'new-password' : 'current-password'} className="input" value={form.data[key]} onChange={e => form.setData(key, e.target.value)} /></Field>)}<p className="hint">Use at least 10 characters, with uppercase and lowercase letters and a number.</p><button className="btn-primary w-full" disabled={form.processing}>{form.processing ? 'Saving…' : 'Update password'}</button>{!required && <Link href="/dashboard" className="link block text-center text-sm">Back to workspace</Link>}<Link href="/logout" method="post" as="button" className="link w-full text-sm">Sign out</Link></form></AuthLayout>;
+}

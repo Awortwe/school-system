@@ -1,0 +1,3 @@
+import StaffLayout from '../../Layouts/StaffLayout';
+import { DataTable, RecordForm, text, pick, type Row } from '../../Components/Management';
+export default function Documents(p: Row) { return <StaffLayout title="Private documents"><DataTable data={p.documents} columns={['title', 'category', 'original_name', 'size', 'uploader']} actions={row => <a className="link" href={`/documents/${row.id}/download`}>Download</a>} /><RecordForm title="Upload student document" action="/documents" permission="documents.manage" fields={[pick('student_id', 'Student', p.students), text('title', 'Title'), text('category', 'Category', false), { key: 'file', label: 'Document (maximum 10 MB)', type: 'file' }]} /></StaffLayout>; }

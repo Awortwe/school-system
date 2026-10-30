@@ -1,0 +1,1 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">@include('pdf.partials.report-card-styles', ['school' => $report['school']])</head><body>@include('pdf.partials.report-card-content', ['report' => $report, 'copy' => $copy ?? false])</body></html>

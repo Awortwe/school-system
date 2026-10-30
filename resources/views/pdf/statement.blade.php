@@ -1,0 +1,5 @@
+@extends('pdf.finance-layout')
+@section('content')
+<h2>STUDENT ACCOUNT STATEMENT</h2><p><strong>{{ $student->fullName() }}</strong> | {{ $student->admission_no }}<br>{{ $student->currentSection?->displayName() }}<br>Generated: {{ now()->format('d M Y') }}</p><div class="notice">Current account balance: <strong>{{ \App\Support\Money::format($balance_minor) }}</strong><br>Positive = amount owed. Negative = credit available. Includes all recorded terms and arrears.</div>
+<table><thead><tr><th style="width:15%">Date</th><th style="width:40%">Reference / description</th><th class="amount">Debit</th><th class="amount">Credit</th><th class="amount">Balance</th></tr></thead><tbody>@foreach($ledger as $entry)<tr><td>{{ $entry->entry_date?->toDateString() }}</td><td>{{ $entry->reference }}<br>{{ $entry->description }}</td><td class="amount">{{ \App\Support\Money::toMajor($entry->debit_minor) }}</td><td class="amount">{{ \App\Support\Money::toMajor($entry->credit_minor) }}</td><td class="amount">{{ \App\Support\Money::toMajor($entry->balance_minor) }}</td></tr>@endforeach</tbody></table>
+@endsection
